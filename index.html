@@ -1,742 +1,552 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TemplateVault - Premium Digital Templates</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                500: "#7c3aed",
+                600: "#6d28d9",
+              },
+              secondary: "#ec4899",
+              accent: "#3b82f6",
+              dark: "#0a0a0a",
+              darker: "#000000",
+              light: "#f0f0f0",
+              surface: "#1a1a1a",
+              border: "rgba(255,255,255,0.1)",
+            },
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .text-gradient {
+          @apply bg-gradient-to-r from-primary-500 to-accent bg-clip-text text-transparent;
+        }
+        .bg-gradient-accent {
+          @apply bg-gradient-to-r from-primary-500 to-accent;
+        }
+        .border-border {
+          border-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+    </style>
     <style>
-    /* Dark Theme CSS */
-    :root {
-        --primary: #7c3aed;
-        --secondary: #ec4899;
-        --accent: #3b82f6;
-        --dark: #0a0a0a;
-        --darker: #000000;
-        --light: #f0f0f0;
-        --surface: #1a1a1a;
-        --border: rgba(255,255,255,0.1);
-    }
+        body {
+            overflow-x: hidden;
+        }
+    </style>
+  </head>
+  <body class="bg-dark text-light font-sans antialiased">
+    <!-- Under construction banner -->
+    <div
+      class="w-full h-10 bg-black text-white text-center text-sm md:text-base flex items-center justify-center border-b border-gray-800"
+    >
+      Under construction! Launching soon 🚀
+    </div>
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Inter', system-ui, sans-serif;
-    }
-
-    body {
-        background-color: var(--dark);
-        color: var(--light);
-        line-height: 1.7;
-        overflow-x: hidden;
-    }
-
-    /* Modern Header */
-    header {
-        background: var(--darker);
-        border-bottom: 1px solid var(--border);
-        padding: 1rem 5vw;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .logo {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        text-decoration: none;
-    }
-
-    .logo-svg {
-        width: 45px;
-        height: 45px;
-        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-    }
-
-    .logo-text {
-        font-size: 1.5rem;
-        font-weight: 700;
-        background: linear-gradient(45deg, var(--primary), var(--accent));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    /* Navigation */
-    nav ul {
-        display: flex;
-        gap: 2rem;
-        list-style: none;
-    }
-
-    nav a {
-        color: var(--light);
-        text-decoration: none;
-        font-weight: 500;
-        position: relative;
-        padding: 0.5rem 0;
-        transition: color 0.3s ease;
-    }
-
-    nav a::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 2px;
-        bottom: 0;
-        left: 0;
-        background: var(--primary);
-        transition: width 0.3s ease;
-    }
-
-    nav a:hover::after {
-        width: 100%;
-    }
-
-    .auth-button {
-        background: var(--primary);
-        color: white;
-        padding: 0.75rem 2rem;
-        border-radius: 8px;
-        border: none;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .auth-button:hover {
-        background: var(--accent);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
-    }
-/* Modern Body Section CSS */
-.hero {
-    background: linear-gradient(45deg, var(--darker) 0%, var(--surface) 100%);
-    padding: 8rem 5vw 12rem;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-content {
-    display: flex;
-    gap: 4rem;
-    align-items: center;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.hero-text {
-    flex: 1;
-    z-index: 2;
-}
-
-.hero-text h1 {
-    font-size: 4rem;
-    line-height: 1.1;
-    background: linear-gradient(45deg, var(--primary), var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 2rem;
-}
-
-.hero-subtitle {
-    font-size: 1.5rem;
-    color: rgba(255,255,255,0.8);
-    margin-bottom: 3rem;
-    max-width: 600px;
-}
-
-.cta-container {
-    display: flex;
-    gap: 1.5rem;
-    margin-top: 3rem;
-}
-
-.cta-primary, .cta-secondary {
-    padding: 1.25rem 2.5rem;
-    border-radius: 12px;
-    font-weight: 600;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.cta-primary {
-    background: var(--primary);
-    color: white;
-    border: 2px solid transparent;
-}
-
-.cta-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 24px rgba(124, 58, 237, 0.3);
-}
-
-.cta-secondary {
-    background: transparent;
-    color: var(--primary);
-    border: 2px solid var(--border);
-}
-
-.cta-secondary:hover {
-    background: rgba(255,255,255,0.05);
-    border-color: var(--primary);
-}
-
-.hero-visual {
-    flex: 1;
-    position: relative;
-    min-height: 600px;
-}
-
-.template-preview {
-    display: flex;
-    gap: 2rem;
-    position: absolute;
-    transform: rotate(-5deg);
-}
-
-.preview-card {
-    width: 280px;
-    height: 400px;
-    border-radius: 24px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    transition: transform 0.3s ease;
-}
-
-.preview-card:hover {
-    transform: translateY(-10px);
-}
-
-.card-1 { transform: translateY(50px); }
-.card-2 { transform: translateY(0); }
-.card-3 { transform: translateY(80px); }
-
-.features {
-    display: flex;
-    gap: 2rem;
-    padding: 4rem 5vw;
-    background: var(--surface);
-}
-
-.feature-card {
-    flex: 1;
-    padding: 3rem;
-    border-radius: 24px;
-    background: var(--dark);
-    border: 1px solid var(--border);
-    transition: all 0.3s ease;
-}
-
-.feature-card.accent {
-    background: linear-gradient(45deg, var(--primary), var(--accent));
-    transform: translateY(-40px);
-}
-
-.feature-card:hover {
-    transform: translateY(-10px);
-}
-
-.feature-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.showcase {
-    padding: 6rem 5vw;
-    background: var(--darker);
-}
-
-.showcase-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 4rem;
-}
-
-.filter-controls {
-    display: flex;
-    gap: 1rem;
-    background: var(--surface);
-    padding: 0.5rem;
-    border-radius: 12px;
-}
-
-.filter-btn {
-    padding: 0.75rem 2rem;
-    border: none;
-    background: transparent;
-    color: rgba(255,255,255,0.7);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.filter-btn.active {
-    background: var(--primary);
-    color: white;
-}
-
-.template-carousel {
-    display: flex;
-    gap: 2rem;
-    overflow-x: auto;
-    padding-bottom: 2rem;
-}
-
-.template-card {
-    min-width: 350px;
-    background: var(--surface);
-    border-radius: 24px;
-    padding: 1.5rem;
-    position: relative;
-    overflow: hidden;
-}
-
-.card-badge {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: var(--accent);
-    color: white;
-    padding: 0.5rem 1.5rem;
-    border-radius: 50px;
-    font-size: 0.875rem;
-}
-
-.card-media {
-    height: 240px;
-    background: var(--dark);
-    border-radius: 16px;
-    margin-bottom: 1.5rem;
-    position: relative;
-}
-
-.media-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(45deg, rgba(124,58,237,0.3), transparent);
-}
-
-@media (max-width: 1200px) {
-    .hero-content {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .cta-container {
-        justify-content: center;
-    }
-    
-    .features {
-        flex-wrap: wrap;
-    }
-    
-    .feature-card {
-        min-width: 300px;
-    }
-}
-    /* Footer Design */
-    footer {
-        background: var(--darker);
-        border-top: 1px solid var(--border);
-        padding: 4rem 5vw 2rem;
-        margin-top: 5rem;
-    }
-
-    .footer-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 3rem;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .footer-column h4 {
-        color: var(--light);
-        margin-bottom: 1.5rem;
-        padding-bottom: 0.75rem;
-        position: relative;
-    }
-
-    .footer-column h4::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 40px;
-        height: 2px;
-        background: var(--primary);
-    }
-
-    .footer-links {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-
-    .footer-links a {
-        color: rgba(255,255,255,0.7);
-        text-decoration: none;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .footer-links a:hover {
-        color: var(--primary);
-        padding-left: 0.5rem;
-    }
-
-    .footer-bottom {
-        margin-top: 3rem;
-        padding-top: 2rem;
-        border-top: 1px solid var(--border);
-        text-align: center;
-        color: rgba(255,255,255,0.6);
-    }
-
-    /* Contact Form Design */
-    .contact-section {
-        background: var(--surface);
-        border-radius: 16px;
-        padding: 4rem;
-        max-width: 800px;
-        margin: 4rem auto;
-        border: 1px solid var(--border);
-    }
-
-    .contact-section h3 {
-        text-align: center;
-        margin-bottom: 2rem;
-        font-size: 2rem;
-    }
-
-    .form-group {
-        margin-bottom: 1.5rem;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 0.5rem;
-        color: var(--light);
-    }
-
-    .form-group input,
-    .form-group textarea {
-        width: 100%;
-        padding: 1rem;
-        background: var(--dark);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        color: var(--light);
-        transition: all 0.3s ease;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
-        outline: none;
-    }
-
-    form button {
-        width: 100%;
-        padding: 1rem;
-        background: var(--primary);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        margin-top: 1rem;
-    }
-
-    form button:hover {
-        background: var(--accent);
-        transform: translateY(-2px);
-    }
-    footer {
-    background: var(--dark);
-    color: white;
-    padding: 4rem 5vw;
-  }
-  
-  .footer-links {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 3rem;
-    padding-bottom: 3rem;
-  }
-  
-  .footer-column h4 {
-    margin-bottom: 1.5rem;
-    position: relative;
-    padding-bottom: 0.5rem;
-  }
-  
-  .footer-column h4::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 40px;
-    height: 2px;
-    background: var(--primary);
-  }
-  
-  .footer-column a {
-    color: rgba(255, 255, 255, 0.8);
-    transition: all 0.3s ease;
-  }
-  
-  .footer-column a:hover {
-    color: var(--primary);
-    padding-left: 0.5rem;
-  }
-  
-  /* Modern Responsive Design */
-  @media (max-width: 768px) {
-    .hero h2 { font-size: 2.5rem; }
-    nav ul { gap: 1rem; }
-    .template-grid { grid-template-columns: 1fr; }
-    form { padding: 2rem; }
-  }
-</style>
-  <body>
-    <section
-    style="width: 100%; height: 40px; background-color: #000000; color: white; text-align: center; font-size: 20px; font-family: Arial, Helvetica, sans-serif; border-bottom: solid 1px rgb(114, 114, 114);"
-  >
-    under the construction!
-  </section>
-    <header>
-        <a href="#" class="logo">
-            <svg class="logo-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M24 4L44 16.5V31.5L24 44L4 31.5V16.5L24 4Z" fill="url(#paint0_linear)"/>
-                <path d="M24 34C29.5228 34 34 29.5228 34 24C34 18.4772 29.5228 14 24 14C18.4772 14 14 18.4772 14 24C14 29.5228 18.4772 34 24 34Z" fill="#7C3AED"/>
-                <defs>
-                    <linearGradient id="paint0_linear" x1="24" y1="4" x2="24" y2="44" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#7C3AED"/>
-                        <stop offset="1" stop-color="#3B82F6"/>
-                    </linearGradient>
-                </defs>
-            </svg>
-            <span class="logo-text">TemplateVault</span>
+    <!-- Header -->
+    <header
+      class="bg-darker border-b border-border sticky top-0 z-50 px-4 sm:px-6 lg:px-8 py-4"
+    >
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <a href="#" class="flex items-center gap-3">
+          <svg
+            class="w-10 h-10"
+            viewBox="0 0 48 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M24 4L44 16.5V31.5L24 44L4 31.5V16.5L24 4Z"
+              fill="url(#paint0_linear)"
+            />
+            <path
+              d="M24 34C29.5228 34 34 29.5228 34 24C34 18.4772 29.5228 14 24 14C18.4772 14 14 18.4772 14 24C14 29.5228 18.4772 34 24 34Z"
+              fill="#7C3AED"
+            />
+            <defs>
+              <linearGradient
+                id="paint0_linear"
+                x1="24"
+                y1="4"
+                x2="24"
+                y2="44"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stop-color="#7C3AED" />
+                <stop offset="1" stop-color="#3B82F6" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <span class="text-gradient text-2xl font-bold">TemplateVault</span>
         </a>
-        <nav >
-            <ul>
-                <li><a href="#free">Free</a></li>
-                <li><a href="#basic">Basic</a></li>
-                <li><a href="#medium">Medium</a></li>
-                <li><a href="#advanced">Advanced</a></li>
-            </ul>
+
+        <nav class="hidden md:block">
+          <ul class="flex space-x-6 lg:space-x-8">
+            <li>
+              <a
+                href="#free"
+                class="text-white hover:text-primary-500 transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary-500 after:transition-all after:duration-300 hover:after:w-full"
+                >Free</a
+              >
+            </li>
+            <li>
+              <a
+                href="#basic"
+                class="text-white hover:text-primary-500 transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary-500 after:transition-all after:duration-300 hover:after:w-full"
+                >Basic</a
+              >
+            </li>
+            <li>
+              <a
+                href="#medium"
+                class="text-white hover:text-primary-500 transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary-500 after:transition-all after:duration-300 hover:after:w-full"
+                >Medium</a
+              >
+            </li>
+            <li>
+              <a
+                href="#advanced"
+                class="text-white hover:text-primary-500 transition-colors duration-300 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary-500 after:transition-all after:duration-300 hover:after:w-full"
+                >Advanced</a
+              >
+            </li>
+          </ul>
         </nav>
-       
+
+        <button
+          class="bg-gradient-to-r from-primary-500 to-primary-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-accent hover:to-primary-500 transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg hover:shadow-primary-500/30"
+        >
+          Sign In
+        </button>
+      </div>
     </header>
 
-  
     <main>
-        <section class="hero">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Craft Digital Excellence</h1>
-                    <p class="hero-subtitle">2000+ premium templates for modern creators</p>
-                    <div class="cta-container">
-                        <button class="cta-primary" onclick="window.location.href = 'templates.html'">Browse All</button>
-                        <button class="cta-secondary">View Case Studies</button>
-                    </div>
+      <!-- Hero Section -->
+      <section
+        class="bg-gradient-to-br from-darker to-surface relative overflow-hidden pt-20 pb-32 px-4 sm:px-6 lg:px-8"
+      >
+        <div
+          class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-16"
+        >
+          <div class="lg:w-1/2 text-center lg:text-left z-10">
+            <h1
+              class="text-gradient text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
+            >
+              Craft Digital Excellence
+            </h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0 mb-8">
+              2000+ premium templates for modern creators
+            </p>
+            <div
+              class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+            >
+              <button
+                class="bg-primary-500 text-white px-8 py-4 rounded-xl font-semibold hover:bg-primary-600 transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-primary-500/40"
+              >
+                Browse All
+              </button>
+              <button
+                class="border border-border text-primary-500 px-8 py-4 rounded-xl font-semibold hover:bg-surface transition-all duration-300"
+              >
+                View Case Studies
+              </button>
+            </div>
+          </div>
+
+          <div class="lg:w-1/2 relative h-[500px] lg:h-[600px]">
+            <div class="absolute -rotate-6 flex gap-6 lg:gap-8">
+              <div
+                class="w-64 h-96 bg-surface border border-border rounded-3xl transition-transform duration-300 hover:-translate-y-4"
+                style="
+                  background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+                  background-size: cover;
+                  background-position: center;
+                "
+              ></div>
+              <div
+                class="w-64 h-96 bg-surface border border-border rounded-3xl transition-transform duration-300 hover:-translate-y-4 translate-y-12"
+                style="
+                  background-image: url('https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+                  background-size: cover;
+                  background-position: center;
+                "
+              ></div>
+              <div
+                class="w-64 h-96 bg-surface border border-border rounded-3xl transition-transform duration-300 hover:-translate-y-4 translate-y-20"
+                style="
+                  background-image: url('https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+                  background-size: cover;
+                  background-position: center;
+                "
+              ></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Section - Updated for consistent positioning -->
+      <section class="px-4 sm:px-6 lg:px-8 py-16 bg-surface">
+        <div
+          class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
+        >
+          <!-- Feature 1 -->
+          <div
+            class="bg-dark border border-border rounded-3xl p-8 transition-all duration-300 hover:-translate-y-3"
+          >
+            <div class="text-4xl mb-6">📱</div>
+            <h3 class="text-xl font-semibold mb-3">Mobile-First</h3>
+            <p class="text-gray-400">Fully responsive across all devices</p>
+          </div>
+
+          <!-- Feature 2 - Now positioned normally on mobile -->
+          <div
+            class="bg-gradient-accent rounded-3xl p-8 transition-all duration-300 hover:-translate-y-3 md:-translate-y-10 shadow-lg shadow-primary-500/30"
+          >
+            <div class="text-4xl mb-6">⚡</div>
+            <h3 class="text-xl font-semibold mb-3">Lightning Fast</h3>
+            <p>Optimized for performance</p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div
+            class="bg-dark border border-border rounded-3xl p-8 transition-all duration-300 hover:-translate-y-3"
+          >
+            <div class="text-4xl mb-6">🔒</div>
+            <h3 class="text-xl font-semibold mb-3">Secure Code</h3>
+            <p class="text-gray-400">Regular security audits</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Showcase Section -->
+      <section class="px-4 sm:px-6 lg:px-8 py-20 bg-darker">
+        <div class="max-w-7xl mx-auto">
+          <div
+            class="flex flex-col md:flex-row justify-between items-center mb-12 gap-6"
+          >
+            <h2 class="text-3xl font-bold">Popular Templates</h2>
+            <div class="flex bg-surface rounded-xl p-1 gap-1">
+              <button class="px-4 py-2 rounded-lg bg-primary-500 text-white">
+                All
+              </button>
+              <button
+                class="px-4 py-2 rounded-lg text-gray-400 hover:text-white transition-colors"
+              >
+                Web
+              </button>
+              <button
+                class="px-4 py-2 rounded-lg text-gray-400 hover:text-white transition-colors"
+              >
+                Mobile
+              </button>
+              <button
+                class="px-4 py-2 rounded-lg text-gray-400 hover:text-white transition-colors"
+              >
+                Dashboard
+              </button>
+            </div>
+          </div>
+
+          <div class="flex overflow-x-auto pb-6 gap-6 scrollbar-hide">
+            <!-- Template 1 -->
+            <div
+              class="min-w-[300px] sm:min-w-[350px] bg-surface rounded-3xl p-6 relative overflow-hidden"
+            >
+              <div
+                class="absolute top-4 right-4 bg-accent text-white px-3 py-1 rounded-full text-xs font-medium"
+              >
+                NEW
+              </div>
+              <div
+                class="h-60 bg-dark rounded-xl mb-6 flex items-center justify-center"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                  alt="Analytics Dashboard"
+                  class="max-w-[90%] max-h-[90%] rounded"
+                />
+              </div>
+              <div>
+                <h4 class="text-lg font-semibold mb-1">Analytics Dashboard</h4>
+                <p class="text-gray-400 text-sm mb-3">
+                  Modern data visualization interface
+                </p>
+                <div class="flex justify-between items-center">
+                  <span class="font-bold">$149</span>
+                  <div class="flex items-center text-yellow-400 text-sm">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <span class="text-gray-400 ml-1">(428)</span>
+                  </div>
                 </div>
-                <div class="hero-visual">
-                    <div class="deco-shape shape-1"></div>
-                    <div class="deco-shape shape-2"></div>
-                    <div class="template-preview">
-                        <div class="preview-card" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80')"></div>
-                        <div class="preview-card" style="background-image: url('https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80')"></div>
-                        <div class="preview-card" style="background-image: url('https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80')"></div>
-                    </div>
+              </div>
+            </div>
+
+            <!-- Template 2 -->
+            <div
+              class="min-w-[300px] sm:min-w-[350px] bg-surface rounded-3xl p-6 relative overflow-hidden"
+            >
+              <div
+                class="absolute top-4 right-4 bg-secondary text-white px-3 py-1 rounded-full text-xs font-medium"
+              >
+                HOT
+              </div>
+              <div
+                class="h-60 bg-dark rounded-xl mb-6 flex items-center justify-center"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                  alt="E-commerce"
+                  class="max-w-[90%] max-h-[90%] rounded"
+                />
+              </div>
+              <div>
+                <h4 class="text-lg font-semibold mb-1">E-Commerce Pro</h4>
+                <p class="text-gray-400 text-sm mb-3">
+                  Complete online store solution
+                </p>
+                <div class="flex justify-between items-center">
+                  <span class="font-bold">$249</span>
+                  <div class="flex items-center text-yellow-400 text-sm">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <span class="text-gray-400 ml-1">(892)</span>
+                  </div>
                 </div>
+              </div>
             </div>
-        </section>
-    
-        <section class="features">
-            <div class="feature-card">
-                <div class="feature-icon">📱</div>
-                <h3>Mobile-First</h3>
-                <p>Fully responsive across all devices</p>
-            </div>
-            <div class="feature-card accent">
-                <div class="feature-icon">⚡</div>
-                <h3>Lightning Fast</h3>
-                <p>Optimized for performance</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔒</div>
-                <h3>Secure Code</h3>
-                <p>Regular security audits</p>
-            </div>
-        </section>
-    
-        <section class="showcase">
-            <div class="showcase-header">
-                <h2>Popular Templates</h2>
-                <div class="filter-controls">
-                    <button class="filter-btn active">All</button>
-                    <button class="filter-btn">Web</button>
-                    <button class="filter-btn">Mobile</button>
-                    <button class="filter-btn">Dashboard</button>
+
+            <!-- Template 3 -->
+            <div
+              class="min-w-[300px] sm:min-w-[350px] bg-surface rounded-3xl p-6 relative overflow-hidden"
+            >
+              <div
+                class="h-60 bg-dark rounded-xl mb-6 flex items-center justify-center"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                  alt="Portfolio"
+                  class="max-w-[90%] max-h-[90%] rounded"
+                />
+              </div>
+              <div>
+                <h4 class="text-lg font-semibold mb-1">Creative Portfolio</h4>
+                <p class="text-gray-400 text-sm mb-3">
+                  Minimal showcase template
+                </p>
+                <div class="flex justify-between items-center">
+                  <span class="font-bold">$99</span>
+                  <div class="flex items-center text-yellow-400 text-sm">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <span class="text-gray-400 ml-1">(327)</span>
+                  </div>
                 </div>
+              </div>
             </div>
-            
-            <div class="template-carousel">
-                <!-- Template Card 1 -->
-                <article class="template-card">
-                    <div class="card-badge new">NEW</div>
-                    <div class="card-media">
-                        <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Analytics Dashboard" style="max-width: 95%;">
-                    </div>
-                    <div class="card-content">
-                        <h4>Analytics Dashboard</h4>
-                        <p>Modern data visualization interface</p>
-                        <div class="card-meta">
-                            <span class="price">$149</span>
-                            <div class="rating">
-                                ★★★★★ <span>(428)</span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-    
-                <!-- Template Card 2 -->
-                <article class="template-card">
-                    <div class="card-badge popular">HOT</div>
-                    <div class="card-media">
-                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="E-commerce" style="max-width: 95%;">
-                    </div>
-                    <div class="card-content">
-                        <h4>E-Commerce Pro</h4>
-                        <p>Complete online store solution</p>
-                        <div class="card-meta">
-                            <span class="price">$249</span>
-                            <div class="rating">
-                                ★★★★★ <span>(892)</span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-    
-                <!-- Template Card 3 -->
-                <article class="template-card">
-                    <div class="card-media">
-                        <img src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Portfolio" style="max-width: 95%;">
-                    </div>
-                    <div class="card-content">
-                        <h4>Creative Portfolio</h4>
-                        <p>Minimal showcase template</p>
-                        <div class="card-meta">
-                            <span class="price">$99</span>
-                            <div class="rating">
-                                ★★★★☆ <span>(327)</span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-    
-                <!-- Template Card 4 -->
-                <article class="template-card">
-                    <div class="card-badge pro">PRO</div>
-                    <div class="card-media">
-                        <img src="https://images.unsplash.com/photo-1481487196290-c152efe083f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Restaurant" style="max-width: 95%;">
-                    </div>
-                    <div class="card-content">
-                        <h4>Restaurant Suite</h4>
-                        <p>Complete food business solution</p>
-                        <div class="card-meta">
-                            <span class="price">$199</span>
-                            <div class="rating">
-                                ★★★★★ <span>(512)</span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-    
-                <!-- Template Card 5 -->
-                <article class="template-card">
-                    <div class="card-media">
-                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Education" style="max-width: 95%;">
-                    </div>
-                    <div class="card-content">
-                        <h4>Education Portal</h4>
-                        <p>Online learning platform</p>
-                        <div class="card-meta">
-                            <span class="price">$299</span>
-                            <div class="rating">
-                                ★★★★☆ <span>(284)</span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-    
-                <!-- Template Card 6 -->
-                <article class="template-card">
-                    <div class="card-badge new">NEW</div>
-                    <div class="card-media">
-                        <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Social Media" style="max-width: 95%;">
-                    </div>
-                    <div class="card-content">
-                        <h4>Social Network</h4>
-                        <p>Community platform template</p>
-                        <div class="card-meta">
-                            <span class="price">$399</span>
-                            <div class="rating">
-                                ★★★★★ <span>(156)</span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
+
+            <!-- Template 4 -->
+            <div
+              class="min-w-[300px] sm:min-w-[350px] bg-surface rounded-3xl p-6 relative overflow-hidden"
+            >
+              <div
+                class="absolute top-4 right-4 bg-primary-500 text-white px-3 py-1 rounded-full text-xs font-medium"
+              >
+                PRO
+              </div>
+              <div
+                class="h-60 bg-dark rounded-xl mb-6 flex items-center justify-center"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1481487196290-c152efe083f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                  alt="Restaurant"
+                  class="max-w-[90%] max-h-[90%] rounded"
+                />
+              </div>
+              <div>
+                <h4 class="text-lg font-semibold mb-1">Restaurant Suite</h4>
+                <p class="text-gray-400 text-sm mb-3">
+                  Complete food business solution
+                </p>
+                <div class="flex justify-between items-center">
+                  <span class="font-bold">$199</span>
+                  <div class="flex items-center text-yellow-400 text-sm">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <span class="text-gray-400 ml-1">(512)</span>
+                  </div>
+                </div>
+              </div>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
     </main>
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-column">
-                <h4>Products</h4>
-                <ul class="footer-links">
-                    <li><a href="#free">Free Templates</a></li>
-                    <li><a href="#basic">Basic Tier</a></li>
-                    <li><a href="#medium">Pro Tier</a></li>
-                    <li><a href="#advanced">Enterprise</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Company</h4>
-                <ul class="footer-links">
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Partners</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Resources</h4>
-                <ul class="footer-links">
-                    <li><a href="#">Documentation</a></li>
-                    <li><a href="#">API Reference</a></li>
-                    <li><a href="#">Style Guide</a></li>
-                    <li><a href="#">Licensing</a></li>
-                </ul>
-            </div>
+
+    <!-- Footer -->
+    <footer class="bg-darker border-t border-border px-4 sm:px-6 lg:px-8 py-16">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <!-- Column 1 -->
+          <div>
+            <h4
+              class="text-lg font-semibold mb-6 pb-2 relative after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-primary-500"
+            >
+              Products
+            </h4>
+            <ul class="space-y-3">
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-primary-500 transition-colors flex items-center gap-2"
+                  ><i class="fas fa-chevron-right text-xs"></i> Free
+                  Templates</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-primary-500 transition-colors flex items-center gap-2"
+                  ><i class="fas fa-chevron-right text-xs"></i> Basic Tier</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gradient hover:opacity-90 transition-opacity flex items-center gap-2"
+                  ><i class="fas fa-chevron-right text-xs"></i> Pro Tier</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-primary-500 transition-colors flex items-center gap-2"
+                  ><i class="fas fa-chevron-right text-xs"></i> Enterprise</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Column 2 -->
+          <div>
+            <h4
+              class="text-lg font-semibold mb-6 pb-2 relative after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-primary-500"
+            >
+              Company
+            </h4>
+            <ul class="space-y-3">
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-primary-500 transition-colors flex items-center gap-2"
+                  ><i class="fas fa-chevron-right text-xs"></i> About Us</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-primary-500 transition-colors flex items-center gap-2"
+                  ><i class="fas fa-chevron-right text-xs"></i> Blog</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-primary-500 transition-colors flex items-center gap-2"
+                  ><i class="fas fa-chevron-right text-xs"></i> Careers</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-primary-500 transition-colors flex items-center gap-2"
+                  ><i class="fas fa-chevron-right text-xs"></i> Partners</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Column 3 -->
+          <div>
+            <h4
+              class="text-lg font-semibold mb-6 pb-2 relative after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-primary-500"
+            >
+              Resources
+            </h4>
+            <ul class="space-y-3">
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-primary-500 transition-colors flex items-center gap-2"
+                  ><i class="fas fa-chevron-right text-xs"></i> Documentation</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-primary-500 transition-colors flex items-center gap-2"
+                  ><i class="fas fa-chevron-right text-xs"></i> API Reference</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-primary-500 transition-colors flex items-center gap-2"
+                  ><i class="fas fa-chevron-right text-xs"></i> Style Guide</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-primary-500 transition-colors flex items-center gap-2"
+                  ><i class="fas fa-chevron-right text-xs"></i> Licensing</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 TemplateVault. All rights reserved.</p>
-            <p>Designed with ♡ in San Francisco</p>
+
+        <div
+          class="border-t border-border mt-16 pt-8 text-center text-gray-500"
+        >
+          <p>&copy; 2025 TemplateVault. All rights reserved.</p>
+          <p class="mt-2">
+            Designed with <i class="fas fa-heart text-red-500"></i> in
+            tunisiaaaaaa
+          </p>
         </div>
+      </div>
     </footer>
-</body>
+  </body>
 </html>

@@ -1,0 +1,444 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, ShoppingCart, Sun, Moon, Utensils, Calendar, Phone, MapPin } from 'lucide-react';
+import Image from 'next/image';
+
+// ===== DATA ===== //
+const restaurantData = {
+  name: "SAVORÉ",
+  tagline: "Where Every Bite Tells a Story",
+  description: "A culinary journey through Mediterranean flavors with a modern twist.",
+  featuredDishes: [
+    {
+      name: "Truffle Risotto",
+      description: "Creamy Arborio rice with black truffle shavings",
+      price: "$28",
+      image: "https://images.unsplash.com/photo-1694004601053-41926bf4a38a?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+      name: "Grilled Octopus",
+      description: "Tender octopus with smoked paprika aioli",
+      price: "$32",
+      image: "https://plus.unsplash.com/premium_photo-1719530305720-6d38151dafac?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+      name: "Chocolate Soufflé",
+      description: "Warm chocolate center with vanilla bean ice cream",
+      price: "$18",
+      image: "https://images.unsplash.com/photo-1540889539617-6236fa68e2f0?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    }
+  ],
+  menu: [
+    {
+      category: "Starters",
+      items: [
+        { name: "Burrata Salad", price: "$16" },
+        { name: "Tuna Tartare", price: "$22" }
+      ]
+    },
+    {
+      category: "Mains",
+      items: [
+        { name: "Filet Mignon", price: "$42" },
+        { name: "Mushroom Pasta", price: "$26" }
+      ]
+    }
+  ]
+};
+
+// Stable random generator for consistent SSR/CSR
+const stableRandom = (seed: number) => {
+  let x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+};
+
+export default function RestaurantPortfolio() {
+  const [currentDish, setCurrentDish] = useState(0);
+  const [darkMode, setDarkMode] = useState(true);
+  const [isJuicy, setIsJuicy] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+    const interval = setInterval(() => {
+      setCurrentDish((prev) => (prev + 1) % restaurantData.featuredDishes.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Creative juice drip effect
+  const triggerJuiceEffect = () => {
+    if (isClient) {
+      setIsJuicy(true);
+      setTimeout(() => setIsJuicy(false), 1000);
+    }
+  };
+
+  if (!isClient) {
+    // Return a simplified version for SSR
+    return (
+      <div className="min-h-screen bg-amber-50 text-gray-900">
+        <header className="fixed w-full bg-amber-50/90 backdrop-blur-md z-50 border-b border-amber-200">
+          <div className="container mx-auto px-6 py-4">
+            <div className="flex items-center space-x-2">
+              <Utensils className="text-amber-600" />
+              <span className="text-xl font-bold">{restaurantData.name}</span>
+            </div>
+          </div>
+        </header>
+        <div className="h-screen pt-20 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold mb-4">Loading Menu...</h1>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-gray-100' : 'bg-amber-50 text-gray-900'}`}>
+      {/* === ANIMATED BACKGROUND ELEMENTS === */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        {[...Array(20)].map((_, i) => {
+          // Use stable random values based on index
+          const width = 1 + stableRandom(i) * 4;
+          const height = 1 + stableRandom(i + 1) * 4;
+          const left = stableRandom(i + 2) * 100;
+          const top = stableRandom(i + 3) * 100;
+          
+          return (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{
+                opacity: [0, 0.1, 0],
+                y: [0, stableRandom(i + 4) * 200 - 100],
+                x: [0, stableRandom(i + 5) * 200 - 100]
+              }}
+              transition={{
+                duration: 10 + stableRandom(i + 6) * 15,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              className={`absolute rounded-full ${darkMode ? 'bg-amber-400/20' : 'bg-amber-600/10'}`}
+              style={{
+                width: `${width}px`,
+                height: `${height}px`,
+                left: `${left}%`,
+                top: `${top}%`
+              }}
+            />
+          );
+        })}
+      </div>
+
+      <AnimatePresence>
+        {isJuicy && (
+          <motion.div
+            initial={{ y: -100, opacity: 1 }}
+            animate={{ y: window.innerHeight, opacity: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            className="fixed left-1/2 transform -translate-x-1/2 z-50 pointer-events-none"
+          >
+            <motion.div
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 0.5 }}
+              className="text-6xl"
+            >
+              🍊
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* === HEADER === */}
+      <header className={`fixed w-full ${darkMode ? 'bg-gray-900/90' : 'bg-amber-50/90'} backdrop-blur-md z-50 border-b ${darkMode ? 'border-gray-800' : 'border-amber-200'}`}>
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex justify-between items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="flex items-center space-x-2"
+            >
+              <Utensils className={`${darkMode ? 'text-amber-400' : 'text-amber-600'}`} />
+              <span className="text-xl font-bold">{restaurantData.name}</span>
+            </motion.div>
+
+            <nav className="hidden md:flex space-x-8">
+              {['Menu', 'Gallery', 'About', 'Contact'].map((item) => (
+                <motion.button
+                  key={item}
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`${darkMode ? 'text-gray-300 hover:text-amber-400' : 'text-gray-700 hover:text-amber-600'}`}
+                >
+                  {item}
+                </motion.button>
+              ))}
+            </nav>
+
+            <div className="flex items-center space-x-4">
+              <motion.button
+                whileHover={{ rotate: 15 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => setDarkMode(!darkMode)}
+                className={`p-2 rounded-full ${darkMode ? 'bg-gray-800 text-amber-400' : 'bg-amber-100 text-amber-600'}`}
+              >
+                {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className={`p-2 rounded-full ${darkMode ? 'bg-gray-800 text-amber-400' : 'bg-amber-100 text-amber-600'}`}
+                onClick={triggerJuiceEffect}
+              >
+                <ShoppingCart size={18} />
+              </motion.button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* === HERO SECTION (FOOD CAROUSEL) === */}
+      <section className="relative h-screen pt-20 overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentDish}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            className="absolute inset-0"
+          >
+            <Image
+              src={restaurantData.featuredDishes[currentDish].image}
+              alt={restaurantData.featuredDishes[currentDish].name}
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className={`absolute inset-0 ${darkMode ? 'bg-black/50' : 'bg-amber-900/30'}`} />
+          </motion.div>
+        </AnimatePresence>
+
+        <div className="relative h-full flex items-center z-10">
+          <div className="container mx-auto px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="max-w-2xl"
+            >
+              <h1 className="text-4xl md:text-6xl font-bold mb-4">
+                {restaurantData.featuredDishes[currentDish].name}
+              </h1>
+              <p className="text-xl mb-6">
+                {restaurantData.featuredDishes[currentDish].description}
+              </p>
+              <div className="flex items-center space-x-4">
+                <motion.button
+                  whileHover={{ scale: 1.05, backgroundColor: darkMode ? '#D97706' : '#B45309' }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`px-8 py-3 rounded-lg font-bold ${darkMode ? 'bg-amber-600 text-white' : 'bg-amber-700 text-white'}`}
+                >
+                  Order Now — {restaurantData.featuredDishes[currentDish].price}
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`px-6 py-3 rounded-lg border ${darkMode ? 'border-amber-400 text-amber-400' : 'border-amber-600 text-amber-600'}`}
+                >
+                  View Menu
+                </motion.button>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 flex space-x-2">
+          {restaurantData.featuredDishes.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentDish(index)}
+              className={`h-2 w-8 rounded-full transition-all ${currentDish === index ? (darkMode ? 'bg-amber-400' : 'bg-amber-600') : (darkMode ? 'bg-gray-600' : 'bg-amber-200')}`}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* === MENU SECTION === */}
+      <section className={`py-20 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+        <div className="container mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Menu</h2>
+            <div className={`w-20 h-1 mx-auto mb-8 ${darkMode ? 'bg-amber-400' : 'bg-amber-600'}`} />
+            <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+              Carefully crafted dishes using seasonal ingredients
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-12">
+            {restaurantData.menu.map((category, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className={`p-8 rounded-xl ${darkMode ? 'bg-gray-700' : 'bg-amber-50'}`}
+              >
+                <h3 className={`text-2xl font-bold mb-6 ${darkMode ? 'text-amber-400' : 'text-amber-600'}`}>
+                  {category.category}
+                </h3>
+                <div className="space-y-6">
+                  {category.items.map((item, itemIndex) => (
+                    <motion.div
+                      key={itemIndex}
+                      whileHover={{ x: 5 }}
+                      className="flex justify-between items-center pb-4 border-b border-dashed border-gray-400/30"
+                    >
+                      <div>
+                        <h4 className={`font-medium ${darkMode ? 'text-gray-100' : 'text-gray-800'}`}>
+                          {item.name}
+                        </h4>
+                      </div>
+                      <span className={`font-bold ${darkMode ? 'text-amber-400' : 'text-amber-600'}`}>
+                        {item.price}
+                      </span>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* === RESERVATION SECTION === */}
+      <section className={`py-20 ${darkMode ? 'bg-gray-900' : 'bg-amber-100'}`}>
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">Make a Reservation</h2>
+              <div className={`w-20 h-1 mb-8 ${darkMode ? 'bg-amber-400' : 'bg-amber-600'}`} />
+              <div className="space-y-6">
+                <div className="flex items-start space-x-4">
+                  <Calendar className={`mt-1 ${darkMode ? 'text-amber-400' : 'text-amber-600'}`} />
+                  <div>
+                    <h3 className="font-bold mb-1">Hours</h3>
+                    <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      Mon-Fri: 11am - 10pm<br />
+                      Sat-Sun: 10am - 11pm
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <Phone className={`mt-1 ${darkMode ? 'text-amber-400' : 'text-amber-600'}`} />
+                  <div>
+                    <h3 className="font-bold mb-1">Contact</h3>
+                    <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      (555) 123-4567<br />
+                      hello@savoré.com
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <MapPin className={`mt-1 ${darkMode ? 'text-amber-400' : 'text-amber-600'}`} />
+                  <div>
+                    <h3 className="font-bold mb-1">Location</h3>
+                    <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      123 Culinary Ave<br />
+                      Foodie City, FC 12345
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className={`p-8 rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}
+            >
+              <form className="space-y-4">
+                <div>
+                  <label className={`block mb-1 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Name</label>
+                  <input
+                    type="text"
+                    className={`w-full p-3 rounded-lg ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-amber-50 border-amber-200'} border focus:ring-2 focus:ring-amber-500 outline-none`}
+                    placeholder="Your name"
+                  />
+                </div>
+                <div>
+                  <label className={`block mb-1 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Email</label>
+                  <input
+                    type="email"
+                    className={`w-full p-3 rounded-lg ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-amber-50 border-amber-200'} border focus:ring-2 focus:ring-amber-500 outline-none`}
+                    placeholder="your@email.com"
+                  />
+                </div>
+                <div>
+                  <label className={`block mb-1 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Date & Time</label>
+                  <input
+                    type="datetime-local"
+                    className={`w-full p-3 rounded-lg ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-amber-50 border-amber-200'} border focus:ring-2 focus:ring-amber-500 outline-none`}
+                  />
+                </div>
+                <motion.button
+                  whileHover={{ scale: 1.02, backgroundColor: darkMode ? '#D97706' : '#B45309' }}
+                  whileTap={{ scale: 0.98 }}
+                  type="submit"
+                  className={`w-full py-3 rounded-lg font-bold ${darkMode ? 'bg-amber-600 text-white' : 'bg-amber-700 text-white'}`}
+                >
+                  Reserve Table
+                </motion.button>
+              </form>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* === FOOTER === */}
+      <footer className={`py-12 ${darkMode ? 'bg-gray-900 border-gray-800' : 'bg-amber-800 text-amber-100'}`}>
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="mb-6 md:mb-0">
+              <div className="text-2xl font-bold mb-2">{restaurantData.name}</div>
+              <p className="text-sm">{restaurantData.tagline}</p>
+            </div>
+            <div className="flex space-x-6">
+              <motion.a whileHover={{ y: -3 }} href="#" className="hover:text-amber-300">
+                Instagram
+              </motion.a>
+              <motion.a whileHover={{ y: -3 }} href="#" className="hover:text-amber-300">
+                Facebook
+              </motion.a>
+              <motion.a whileHover={{ y: -3 }} href="#" className="hover:text-amber-300">
+                Twitter
+              </motion.a>
+            </div>
+          </div>
+          <div className="mt-8 pt-8 border-t border-amber-700/30 text-center text-sm">
+            &copy; {new Date().getFullYear()} {restaurantData.name}. All rights reserved.
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}

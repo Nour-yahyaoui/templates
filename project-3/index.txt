@@ -1,0 +1,636 @@
+
+'use client';
+
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Leaf, Sprout, Trees, Flower2, Sun, Droplets, Scissors, Shield, Phone, Mail, Instagram, Facebook } from 'lucide-react';
+import Image from 'next/image';
+
+const companyData = {
+  name: "GreenThumb Innovations",
+  tagline: "Cultivating Excellence in Garden Care",
+  description: "We design, manufacture, and provide premium garden tools, plants, and landscaping services to help your garden thrive.",
+  about: "Founded in 2010, GreenThumb Innovations has grown from a small nursery to a full-service garden solutions provider. Our team of horticulturists and designers create tools and services that make gardening accessible and enjoyable for everyone.",
+  services: [
+    {
+      title: "Premium Tools",
+      description: "Ergonomic, durable gardening tools designed for professionals and enthusiasts",
+      icon: <Scissors className="w-8 h-8" />
+    },
+    {
+      title: "Plant Nursery",
+      description: "Wide selection of healthy plants, from ornamentals to edibles",
+      icon: <Sprout className="w-8 h-8" />
+    },
+    {
+      title: "Garden Design",
+      description: "Custom landscape designs tailored to your space and climate",
+      icon: <Trees className="w-8 h-8" />
+    },
+    {
+      title: "Specialty Products",
+      description: "Organic fertilizers, plant treatments, and unique accessories",
+      icon: <Shield className="w-8 h-8" />
+    }
+  ],
+  products: [
+    {
+      name: "Pro Gardener Shears",
+      description: "Professional-grade pruning shears with titanium coating",
+      image: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
+    },
+    {
+      name: "Self-Watering Planters",
+      description: "Beautiful planters with built-in irrigation systems",
+      image: "https://images.unsplash.com/photo-1598880940080-ff9a29891b85?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
+    },
+    {
+      name: "Organic Fertilizer Kit",
+      description: "Complete nutrient system for healthy plant growth",
+      image: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
+    }
+  ],
+  testimonials: [
+    {
+      quote: "Their tools transformed my gardening experience - durable and comfortable to use all day.",
+      author: "Sarah K., Professional Landscaper"
+    },
+    {
+      quote: "The plant selection is unmatched, and everything I've bought has thrived in my garden.",
+      author: "Michael T., Home Gardener"
+    }
+  ]
+};
+
+export default function GardenPortfolio() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    const handleScroll = () => {
+      const sections = ['home', 'products', 'services', 'contact'];
+      const scrollPosition = window.scrollY + 100;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const offsetTop = element.offsetTop;
+          const offsetHeight = element.offsetHeight;
+
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      window.scrollTo({
+        top: element.offsetTop - 80,
+        behavior: 'smooth',
+      });
+    }
+    setIsMenuOpen(false);
+  };
+
+  if (!isMounted) return null;
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-emerald-50 to-white text-emerald-900">
+      {/* Animated leaf background elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        {[...Array(10)].map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, rotate: -45 }}
+            animate={{
+              opacity: [0, 0.1, 0],
+              rotate: Math.random() * 90 - 45,
+              y: [0, Math.random() * 200 - 100],
+              x: [0, Math.random() * 200 - 100]
+            }}
+            transition={{
+              duration: Math.random() * 15 + 15,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="absolute text-emerald-200/30"
+            style={{
+              fontSize: Math.random() * 20 + 10 + 'px',
+              left: Math.random() * 100 + '%',
+              top: Math.random() * 100 + '%'
+            }}
+          >
+            <Leaf />
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Header */}
+      <header className="fixed w-full bg-white/90 backdrop-blur-md border-b border-emerald-100 z-50">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-4">
+              <motion.a
+                href="/"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="text-emerald-600 hover:text-emerald-800 transition-colors"
+                title="Back to Home"
+              >
+                <Leaf className="h-6 w-6" />
+              </motion.a>
+              
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+                className="text-xl font-bold bg-gradient-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent"
+              >
+                {companyData.name}
+              </motion.div>
+            </div>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex space-x-8">
+              {['home', 'products', 'services', 'contact'].map((item) => (
+                <motion.button
+                  key={item}
+                  whileHover={{ scale: 1.05, color: '#059669' }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`capitalize ${activeSection === item ? 'text-emerald-600 font-medium' : 'text-emerald-800'}`}
+                  onClick={() => scrollToSection(item)}
+                >
+                  {item}
+                </motion.button>
+              ))}
+            </nav>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden focus:outline-none text-emerald-800 hover:text-emerald-600"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <div className="w-6 flex flex-col space-y-1">
+                <span className={`h-0.5 bg-current transition-all ${isMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
+                <span className={`h-0.5 bg-current transition-all ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
+                <span className={`h-0.5 bg-current transition-all ${isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></span>
+              </div>
+            </button>
+          </div>
+
+          {/* Mobile Menu */}
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="md:hidden mt-4 space-y-3 overflow-hidden"
+              >
+                {['home', 'products', 'services', 'contact'].map((item) => (
+                  <motion.button
+                    key={item}
+                    whileTap={{ scale: 0.95 }}
+                    className={`block w-full py-2 capitalize text-left ${activeSection === item ? 'text-emerald-600 font-medium' : 'text-emerald-800'}`}
+                    onClick={() => scrollToSection(item)}
+                  >
+                    {item}
+                  </motion.button>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section id="home" className="min-h-screen flex items-center pt-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-10" />
+        
+        <div className="container mx-auto px-6 py-20 md:py-32 relative">
+          <div className="flex flex-col md:flex-row items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="md:w-1/2 mb-12 md:mb-0"
+            >
+              <motion.h1 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                className="text-4xl md:text-5xl font-bold mb-6 leading-tight"
+              >
+                <span className="block text-emerald-800">Cultivate Your</span>
+                <span className="bg-gradient-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent">
+                  Perfect Garden
+                </span>
+              </motion.h1>
+              <motion.h2 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="text-xl md:text-2xl text-emerald-700 mb-8"
+              >
+                {companyData.tagline}
+              </motion.h2>
+              <motion.p 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                className="text-lg mb-8 max-w-lg text-emerald-800"
+              >
+                {companyData.description}
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8 }}
+                className="flex space-x-4"
+              >
+                <motion.button
+                  whileHover={{ scale: 1.05, boxShadow: '0 10px 20px rgba(5, 150, 105, 0.2)' }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-gradient-to-r from-emerald-600 to-emerald-500 text-white px-6 py-3 rounded-lg font-medium flex items-center"
+                  onClick={() => scrollToSection('products')}
+                >
+                  <Leaf className="mr-2" /> Explore Products
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => scrollToSection('services')}
+                  className="border border-emerald-600 text-emerald-600 px-6 py-3 rounded-lg font-medium flex items-center hover:bg-emerald-50 transition-colors"
+                >
+                  Our Services
+                </motion.button>
+              </motion.div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="md:w-1/2 flex justify-center"
+            >
+              <motion.div 
+                whileHover={{ y: -10 }}
+                className="relative w-full max-w-md aspect-square bg-emerald-100 rounded-2xl overflow-hidden border-8 border-white shadow-xl"
+              >
+                <Image
+                  src="https://images.unsplash.com/photo-1598880940080-ff9a29891b85?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
+                  alt="Garden Tools"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/30 via-transparent to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-center">
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    className="inline-block bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm"
+                  >
+                    <span className="font-medium text-emerald-700">Premium Garden Solutions</span>
+                  </motion.div>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Products Section */}
+      <section id="products" className="py-20 bg-white">
+        <div className="container mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-emerald-900">Our Premium Products</h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-emerald-500 to-emerald-300 mx-auto mb-8" />
+            <p className="text-lg text-emerald-800">
+              Tools and accessories designed to make gardening easier and more enjoyable
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {companyData.products.map((product, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -10 }}
+                className="bg-white rounded-xl shadow-md overflow-hidden border border-emerald-100 hover:shadow-lg transition-all"
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div className="p-6">
+                  <div className="flex items-center mb-3">
+                    <div className="bg-emerald-100 p-2 rounded-lg mr-3 text-emerald-600">
+                      {index === 0 && <Scissors className="w-5 h-5" />}
+                      {index === 1 && <Droplets className="w-5 h-5" />}
+                      {index === 2 && <Flower2 className="w-5 h-5" />}
+                    </div>
+                    <h3 className="text-xl font-semibold text-emerald-900">{product.name}</h3>
+                  </div>
+                  <p className="text-emerald-700 mb-4">{product.description}</p>
+                  <motion.button
+                    whileHover={{ backgroundColor: '#059669', color: 'white' }}
+                    className="w-full py-2 border border-emerald-600 text-emerald-600 rounded-lg font-medium transition-colors"
+                  >
+                    View Details
+                  </motion.button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section id="services" className="py-20 bg-emerald-50">
+        <div className="container mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-emerald-900">Our Garden Services</h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-emerald-500 to-emerald-300 mx-auto mb-8" />
+            <p className="text-lg text-emerald-800">
+              Comprehensive solutions for all your gardening needs
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {companyData.services.map((service, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -5 }}
+                className="bg-white p-8 rounded-xl shadow-sm border border-emerald-100 hover:shadow-md transition-all"
+              >
+                <div className="flex items-start mb-6">
+                  <div className="bg-emerald-100 p-3 rounded-lg mr-4 text-emerald-600">
+                    {service.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold text-emerald-900">{service.title}</h3>
+                </div>
+                <p className="text-emerald-700 mb-6">{service.description}</p>
+                <motion.button
+                  whileHover={{ backgroundColor: '#059669', color: 'white' }}
+                  className="inline-flex items-center text-emerald-600 border border-emerald-300 rounded-lg px-4 py-2 font-medium transition-colors"
+                >
+                  Learn More
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </motion.button>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 bg-emerald-600 text-white">
+        <div className="container mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">What Our Customers Say</h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-emerald-300 to-emerald-100 mx-auto mb-8" />
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {companyData.testimonials.map((testimonial, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white/10 backdrop-blur-sm p-8 rounded-xl border border-white/20"
+              >
+                <div className="flex items-center mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Sun key={i} className="w-5 h-5 text-amber-300 fill-current" />
+                  ))}
+                </div>
+                <p className="text-lg italic mb-6">"{testimonial.quote}"</p>
+                <p className="font-medium text-emerald-100">{testimonial.author}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-20 bg-white">
+        <div className="container mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-emerald-900">Get In Touch</h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-emerald-500 to-emerald-300 mx-auto mb-8" />
+            <p className="text-lg text-emerald-800">
+              Have questions about our products or services? We'd love to hear from you.
+            </p>
+          </motion.div>
+
+          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-12">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-2xl font-semibold mb-6 text-emerald-900">Contact Information</h3>
+              <div className="space-y-4">
+                <div className="flex items-start">
+                  <div className="bg-emerald-100 p-3 rounded-lg mr-4 text-emerald-600">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-emerald-800">Email</h4>
+                    <p className="text-emerald-700">info@greenthumbinnovations.com</p>
+                  </div>
+                </div>
+                <div className="flex items-start">
+                  <div className="bg-emerald-100 p-3 rounded-lg mr-4 text-emerald-600">
+                    <Phone className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-emerald-800">Phone</h4>
+                    <p className="text-emerald-700">+1 (555) 123-4567</p>
+                  </div>
+                </div>
+                <div className="flex items-start">
+                  <div className="bg-emerald-100 p-3 rounded-lg mr-4 text-emerald-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-emerald-800">Location</h4>
+                    <p className="text-emerald-700">123 Garden Way, Greenville</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-8">
+                <h4 className="font-semibold mb-4 text-emerald-800">Follow Us</h4>
+                <div className="flex space-x-4">
+                  <motion.a
+                    whileHover={{ y: -5, color: '#059669' }}
+                    href="#"
+                    className="bg-white border border-emerald-200 p-3 rounded-lg hover:bg-emerald-50 transition-colors"
+                  >
+                    <Instagram className="w-5 h-5 text-emerald-700" />
+                  </motion.a>
+                  <motion.a
+                    whileHover={{ y: -5, color: '#059669' }}
+                    href="#"
+                    className="bg-white border border-emerald-200 p-3 rounded-lg hover:bg-emerald-50 transition-colors"
+                  >
+                    <Facebook className="w-5 h-5 text-emerald-700" />
+                  </motion.a>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <form className="space-y-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-emerald-800 mb-1">Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    className="w-full px-4 py-3 bg-white border border-emerald-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition placeholder-emerald-400"
+                    placeholder="Your name"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-emerald-800 mb-1">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    className="w-full px-4 py-3 bg-white border border-emerald-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition placeholder-emerald-400"
+                    placeholder="your.email@example.com"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-emerald-800 mb-1">Message</label>
+                  <textarea
+                    id="message"
+                    rows={5}
+                    className="w-full px-4 py-3 bg-white border border-emerald-200 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition placeholder-emerald-400"
+                    placeholder="Tell us about your gardening needs..."
+                  />
+                </div>
+                <motion.button
+                  whileHover={{ scale: 1.02, boxShadow: '0 5px 15px rgba(5, 150, 105, 0.3)' }}
+                  whileTap={{ scale: 0.98 }}
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-emerald-600 to-emerald-500 text-white py-3 rounded-lg font-medium flex items-center justify-center"
+                >
+                  <Sprout className="mr-2" /> Send Message
+                </motion.button>
+              </form>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-emerald-900 text-emerald-100 py-12">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="mb-6 md:mb-0 text-center md:text-left"
+            >
+              <div className="text-2xl font-bold bg-gradient-to-r from-emerald-300 to-emerald-100 bg-clip-text text-transparent mb-2">
+                {companyData.name}
+              </div>
+              <p className="text-emerald-400">Growing beautiful gardens since 2010</p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="flex flex-col items-center md:items-end"
+            >
+              <div className="flex space-x-6 mb-4">
+                <motion.a
+                  whileHover={{ y: -3, color: '#a7f3d0' }}
+                  href="#"
+                  className="text-emerald-400 hover:text-emerald-200 transition-colors"
+                >
+                  <Instagram className="w-6 h-6" />
+                </motion.a>
+                <motion.a
+                  whileHover={{ y: -3, color: '#a7f3d0' }}
+                  href="#"
+                  className="text-emerald-400 hover:text-emerald-200 transition-colors"
+                >
+                  <Facebook className="w-6 h-6" />
+                </motion.a>
+              </div>
+              <p className="text-sm text-emerald-500 text-center md:text-right">
+                &copy; {new Date().getFullYear()} {companyData.name}. All rights reserved.
+                <br />
+                <span className="text-emerald-600 mt-1 block">
+                  Design by <a href="https://github.com/Nour-yahyaoui" className="text-emerald-300 hover:underline">Nour Yahyaoui</a>
+                </span>
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
